@@ -11,3 +11,4 @@ mosaicplot(HairEyeColor,
            shade = TRUE,
            xlab = "Hair Color",
            ylab = "Eye Color")
+
