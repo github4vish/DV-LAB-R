@@ -1,21 +1,19 @@
-# Install leaflet package if not already installed
-# install.packages("leaflet")
+# Load mtcars dataset
+data("mtcars")
 
-# Load the leaflet library
-library(leaflet)
+# View the first few rows
+head(mtcars)
 
-# Create a basic map
-mymap <- leaflet() %>%
-  addTiles() %>%  # Default OpenStreetMap tile
-  addMarkers(lng = 77.5946, lat = 12.9716, popup = "Bangalore") %>%
-  addMarkers(lng = 72.8777, lat = 19.0760, popup = "Mumbai") %>%
-  addMarkers(lng = 77.1025, lat = 28.7041, popup = "Delhi")
+# Simple heat map without scaling
+heatmap(as.matrix(mtcars),
+        main = "Heat Map of mtcars Dataset",
+        col = heat.colors(256),
+        scale = "none")
 
-# Display the map
-mymap
-
-# Customize the map with a different tile
-leaflet() %>%
-  addProviderTiles("CartoDB.Positron") %>%
-  addCircles(lng = 77.5946, lat = 12.9716, radius = 50000, color = "blue", popup = "Bangalore Area")
+# Heat map with scaling
+heatmap(as.matrix(mtcars),
+        main = "Scaled Heat Map of mtcars Dataset",
+        col = topo.colors(256),
+        scale = "column",   # Scales each column to have mean 0 and sd 1
+        margins = c(5,10))
 

@@ -1,40 +1,21 @@
-# Install required packages if not already installed
-# install.packages("car")
-# install.packages("lattice")
+# Install leaflet package if not already installed
+# install.packages("leaflet")
 
-# Load libraries
-library(car)
-library(rgl)
-library(lattice)
+# Load the leaflet library
+library(leaflet)
 
-# Load iris dataset
-data("iris")
+# Create a basic map
+mymap <- leaflet() %>%
+  addTiles() %>%  # Default OpenStreetMap tile
+  addMarkers(lng = 77.5946, lat = 12.9716, popup = "Bangalore") %>%
+  addMarkers(lng = 72.8777, lat = 19.0760, popup = "Mumbai") %>%
+  addMarkers(lng = 77.1025, lat = 28.7041, popup = "Delhi")
 
+# Display the map
+mymap
 
-# scatter3d plot
-scatter3d(x = iris$Sepal.Length, 
-          y = iris$Sepal.Width, 
-          z = iris$Petal.Length,
-          groups = iris$Species,
-          surface = FALSE,    # Set to TRUE if you want regression surfaces
-          point.col = c("red", "green", "blue"),
-          grid = TRUE,
-          ellipsoid = TRUE)
-
-rglwidget()
-
-# cloud plot
-cloud(Petal.Length ~ Sepal.Length * Sepal.Width,
-      data = iris,
-      groups = Species,
-      auto.key = TRUE,
-      screen = list(z = 40, x = -60),
-      main = "3D Cloud Plot of Iris Dataset")
-
-# xyplot (2D plot with grouping by species)
-xyplot(Petal.Length ~ Sepal.Length | Species, 
-       data = iris,
-       layout = c(3,1),
-       type = c("p", "r"),
-       main = "XY Plot of Sepal Length vs Petal Length by Species")
+# Customize the map with a different tile
+leaflet() %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addCircles(lng = 77.5946, lat = 12.9716, radius = 50000, color = "blue", popup = "Bangalore Area")
 

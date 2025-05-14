@@ -1,17 +1,20 @@
-# Install the maps package if not already installed
-# install.packages("maps")
+# Install required package if not already installed
+# install.packages("corrplot")
 
-# Load maps library
-library(maps)
+# Load the corrplot library
+library(corrplot)
 
-# Plot the world map
-world_map <- map("world", fill = TRUE, col = "lightblue", border = "white", main = "World Map")
+# Load iris dataset
+data("iris")
 
-# Add a specific country (e.g., India) with custom coloring
-map("world", regions = "India", fill = TRUE, col = "orange", add = TRUE)
+# Calculate the correlation matrix for numeric columns (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
+cor_matrix <- cor(iris[, 1:4])
 
-# Plot the US map with customized borders
-map("state", fill = TRUE, col = "lightgreen", border = "black", main = "USA State Map")
-
-# Add a specific region (e.g., California) to the map
-map("state", regions = "California", fill = TRUE, col = "red", add = TRUE)
+# Create correlogram
+corrplot(cor_matrix, 
+         method = "color",     # Color-coded correlations
+         type = "upper",       # Only show upper half of the matrix
+         tl.col = "black",     # Label color
+         tl.cex = 0.8,         # Label size
+         addCoef.col = "black", # Add correlation coefficients
+         diag = FALSE)         # Do not show diagonal (self-correlation)

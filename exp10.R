@@ -1,20 +1,40 @@
-# Install required package if not already installed
-# install.packages("corrplot")
+# Install required packages if not already installed
+# install.packages("car")
+# install.packages("lattice")
 
-# Load the corrplot library
-library(corrplot)
+# Load libraries
+library(car)
+library(rgl)
+library(lattice)
 
 # Load iris dataset
 data("iris")
 
-# Calculate the correlation matrix for numeric columns (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
-cor_matrix <- cor(iris[, 1:4])
 
-# Create correlogram
-corrplot(cor_matrix, 
-         method = "color",     # Color-coded correlations
-         type = "upper",       # Only show upper half of the matrix
-         tl.col = "black",     # Label color
-         tl.cex = 0.8,         # Label size
-         addCoef.col = "black", # Add correlation coefficients
-         diag = FALSE)         # Do not show diagonal (self-correlation)
+# scatter3d plot
+scatter3d(x = iris$Sepal.Length, 
+          y = iris$Sepal.Width, 
+          z = iris$Petal.Length,
+          groups = iris$Species,
+          surface = FALSE,    # Set to TRUE if you want regression surfaces
+          point.col = c("red", "green", "blue"),
+          grid = TRUE,
+          ellipsoid = TRUE)
+
+rglwidget()
+
+# cloud plot
+cloud(Petal.Length ~ Sepal.Length * Sepal.Width,
+      data = iris,
+      groups = Species,
+      auto.key = TRUE,
+      screen = list(z = 40, x = -60),
+      main = "3D Cloud Plot of Iris Dataset")
+
+# xyplot (2D plot with grouping by species)
+xyplot(Petal.Length ~ Sepal.Length | Species, 
+       data = iris,
+       layout = c(3,1),
+       type = c("p", "r"),
+       main = "XY Plot of Sepal Length vs Petal Length by Species")
+
